@@ -4,7 +4,7 @@ defmodule Quantex.Mixfile do
   def project do
     [
       app: :quantex,
-      version: "0.0.2",
+      version: "0.0.3",
       elixir: "~> 1.5",
       description: "Quantum computer system environment and libraries in Elixir", 
       package: 

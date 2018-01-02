@@ -26,6 +26,21 @@ iex> Q.q0 |> Q.h  # H|0> = 1 / sqrt( 2 ) |0> + 1 / sqrt( 2 ) |1> = ( 0.7, 0.7 ) 
 
 iex> Q.q1 |> Q.h  # H|1> = 1 / sqrt( 2 ) |0> - 1 / sqrt( 2 ) |1> = ( 0.7, -0.7 )
 %Array{array: [0.7071067811865475, -0.7071067811865475], shape: {2, nil}}
+
+iex> Q.cnot( Q.q0, Q.q0 )  # CNOT|00> = |00> = ( 1, 0, 0, 0 ) ... CNOT gate(Controlled NOT gate)
+%Array{array: [1, 0, 0, 0], shape: {4, nil}}
+
+iex> Q.cnot( Q.q0, Q.q1 )  # CNOT|01> = |01> = ( 0, 1, 0, 0 )
+%Array{array: [0, 1, 0, 0], shape: {4, nil}}
+
+iex> Q.cnot( Q.q1, Q.q0 )  # CNOT|10> = |11> = ( 0, 0, 0, 1 )
+%Array{array: [0, 0, 0, 1], shape: {4, nil}}
+
+iex> Q.cnot( Q.q1, Q.q1 )  # CNOT|11> = |10> = ( 0, 0, 1, 0 )
+%Array{array: [0, 0, 1, 0], shape: {4, nil}}
+
+iex> Q.cnot( Q.q1, Q.q0 ) |> Q.z  # Cz(|11>) = -|11> = ( 0, 0, 0, -1 )
+%Array{array: [0, 0, 0, -1], shape: {4, nil}}
 ```
 
 See the [online documentation](https://hexdocs.pm/quantex).
@@ -37,7 +52,7 @@ Add to your ```mix.exs``` file:
 ```elixir
 def deps do
   [
-    { :quantex, "~> 0.0.2" }
+    { :quantex, "~> 0.0.3" }
   ]
 end
 ```

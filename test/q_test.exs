@@ -28,6 +28,20 @@ defmodule QPrimitiveTest do
 		assert [ [ 0.9999999999999998, 0 ], [ -0.9999999999999998, 0 ] ] |> Q.to_bit == [ [ 1, 0 ], [ -1, 0 ] ]
 		assert [ [ 1, 0 ], [ -1, 0 ] ] |> Q.to_bit == [ [ 1, 0 ], [ -1, 0 ] ]
 	end
+
+	test "tensordot" do
+		assert Q.tensordot( Q.q0(), Q.q0(), 0 ) == Numexy.outer( Q.q0(), Q.q0() ).array |> List.flatten |> Numexy.new
+		assert Q.tensordot( Q.q0(), Q.q0(), 0 ) == Numexy.new( [ 1, 0, 0, 0 ] )
+
+		assert Q.tensordot( Q.q0(), Q.q1(), 0 ) == Numexy.outer( Q.q0(), Q.q1() ).array |> List.flatten |> Numexy.new
+		assert Q.tensordot( Q.q0(), Q.q1(), 0 ) == Numexy.new( [ 0, 1, 0, 0 ] )
+
+		assert Q.tensordot( Q.q1(), Q.q0(), 0 ) == Numexy.outer( Q.q1(), Q.q0() ).array |> List.flatten |> Numexy.new
+		assert Q.tensordot( Q.q1(), Q.q0(), 0 ) == Numexy.new( [ 0, 0, 1, 0 ] )
+
+		assert Q.tensordot( Q.q1(), Q.q1(), 0 ) == Numexy.outer( Q.q1(), Q.q1() ).array |> List.flatten |> Numexy.new
+		assert Q.tensordot( Q.q1(), Q.q1(), 0 ) == Numexy.new( [ 0, 0, 0, 1 ] )
+	end
 end
 
 defmodule NumexyPrimitiveTest do
@@ -59,10 +73,23 @@ defmodule QGateTest do
 		assert Q.z( Q.q1() ) == -1 |> Numexy.mul( Q.q1() )
 	end
 
+	test "Z Gate 2x2" do
+		assert Q.z( Numexy.new [ 0, 0, 0, 1 ] ) == Q.tensordot( Q.q1(), -1 |> Numexy.mul( Q.q1() ), 0 )
+		assert Q.z( Numexy.new [ 0, 0, 0, 1 ] ) == Numexy.new [ 0, 0, 0, -1 ]
+	end
+
 	test "Hadamard Gate" do
 		assert Q.h( Q.q0() ) == Numexy.add( Q.n07() |> Numexy.mul( Q.q0() ), Q.n07() |> Numexy.mul( Q.q1() ) )
 		assert Q.h( Q.q0() ) == Numexy.new [ Q.n07(),  Q.n07() ]
 		assert Q.h( Q.q1() ) == Numexy.sub( Q.n07() |> Numexy.mul( Q.q0() ), Q.n07() |> Numexy.mul( Q.q1() ) )
 		assert Q.h( Q.q1() ) == Numexy.new [ Q.n07(), -Q.n07() ]
+	end
+
+	test "cx Inner Product", do: assert Numexy.dot( Q.cx(), Numexy.new( [ 0, 0, 1, 0 ] ) ) == Numexy.new( [ 0, 0, 0, 1 ] )
+	test "Controlled NOT gate" do
+		assert Q.cnot( Q.q0(), Q.q0() ) == Numexy.new [ 1, 0, 0, 0 ]	# |00>
+		assert Q.cnot( Q.q0(), Q.q1() ) == Numexy.new [ 0, 1, 0, 0 ]	# |01>
+		assert Q.cnot( Q.q1(), Q.q0() ) == Numexy.new [ 0, 0, 0, 1 ]	# |11>
+		assert Q.cnot( Q.q1(), Q.q1() ) == Numexy.new [ 0, 0, 1, 0 ]	# |10>
 	end
 end
