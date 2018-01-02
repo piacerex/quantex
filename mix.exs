@@ -4,7 +4,7 @@ defmodule Quantex.Mixfile do
   def project do
     [
       app: :quantex,
-      version: "0.0.3",
+      version: "0.0.4",
       elixir: "~> 1.5",
       description: "Quantum computer system environment and libraries in Elixir", 
       package: 
@@ -28,9 +28,10 @@ defmodule Quantex.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      { :ex_doc,         "~> 0.16",  only: :dev, runtime: false }, 
-      { :power_assert,   "~> 0.1.1", only: :test }, 
-      { :mix_test_watch, "~> 0.5",   only: :dev, runtime: false }, 
+      { :ex_doc,         "~> 0.18.1", only: :dev, runtime: false }, 
+      { :power_assert,   "~> 0.1.1",  only: :test }, 
+      { :mix_test_watch, "~> 0.5",    only: :dev, runtime: false }, 
+      { :earmark,        "~> 1.2.4" }, 
       { :numexy,         "~> 0.1.0" }, 
       { :math,           "~> 0.3.0" }, 
     ]

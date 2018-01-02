@@ -41,6 +41,9 @@ iex> Q.cnot( Q.q1, Q.q1 )  # CNOT|11> = |10> = ( 0, 0, 1, 0 )
 
 iex> Q.cnot( Q.q1, Q.q0 ) |> Q.z  # Cz(|11>) = -|11> = ( 0, 0, 0, -1 )
 %Array{array: [0, 0, 0, -1], shape: {4, nil}}
+
+iex> Q.epr( Q.q0(), Q.q0 )  # EPR|00> = 1 / sqrt( 2 ) |00> + 1 / sqrt( 2 ) |11> = ( 0.7, 0, 0, 0.7 ) ... EPR pair
+%Array{array: [0.7071067811865475, 0, 0, 0.7071067811865475], shape: {4, nil}}
 ```
 
 See the [online documentation](https://hexdocs.pm/quantex).
@@ -52,7 +55,7 @@ Add to your ```mix.exs``` file:
 ```elixir
 def deps do
   [
-    { :quantex, "~> 0.0.3" }
+    { :quantex, "~> 0.0.4" }
   ]
 end
 ```
