@@ -1,4 +1,4 @@
-defmodule NumexyPrimitiveTest do
+defmodule OtherPrimitiveTest do
 	use PowerAssert
 
 	test "Inner Product on 2x1", do: assert Numexy.dot( Numexy.new( [ 1,  1 ] ), Numexy.new( [ 1, -1 ] ) ) == 0
@@ -12,18 +12,11 @@ defmodule NumexyPrimitiveTest do
 		assert Numexy.reshape( [ 1, 2, 3, 4, 5, 6 ], 2 ) == Numexy.new( [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ] )
 		assert Numexy.reshape( [ 1, 2, 3, 4, 5, 6 ], 3 ) == Numexy.new( [ [ 1, 2, 3 ], [ 4, 5, 6 ] ] )
 	end
+end
 
-	test "tensordot" do
-		assert Q.tensordot( Q.q0(), Q.q0(), 0 ) == Numexy.outer( Q.q0(), Q.q0() ).array |> List.flatten |> Numexy.new
-		assert Q.tensordot( Q.q0(), Q.q0(), 0 ) == Numexy.new( [ 1, 0, 0, 0 ] )
+defmodule ComplexNumPrimitiveTest do
+	use PowerAssert
 
-		assert Q.tensordot( Q.q0(), Q.q1(), 0 ) == Numexy.outer( Q.q0(), Q.q1() ).array |> List.flatten |> Numexy.new
-		assert Q.tensordot( Q.q0(), Q.q1(), 0 ) == Numexy.new( [ 0, 1, 0, 0 ] )
-
-		assert Q.tensordot( Q.q1(), Q.q0(), 0 ) == Numexy.outer( Q.q1(), Q.q0() ).array |> List.flatten |> Numexy.new
-		assert Q.tensordot( Q.q1(), Q.q0(), 0 ) == Numexy.new( [ 0, 0, 1, 0 ] )
-
-		assert Q.tensordot( Q.q1(), Q.q1(), 0 ) == Numexy.outer( Q.q1(), Q.q1() ).array |> List.flatten |> Numexy.new
-		assert Q.tensordot( Q.q1(), Q.q1(), 0 ) == Numexy.new( [ 0, 0, 0, 1 ] )
-	end
+	test "real", do: ComplexNum.new( 2, 3 ).real == 2
+	test "imaginary", do: ComplexNum.new( 2, 3 ).imaginary == 3
 end

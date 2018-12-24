@@ -55,7 +55,7 @@ Add to your ```mix.exs``` file:
 ```elixir
 def deps do
   [
-    { :quantex, "~> 0.0.4" }
+    { :quantex, "~> 0.1.0" }
   ]
 end
 ```
